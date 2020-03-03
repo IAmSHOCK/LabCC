@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -Wl,--enable-auto-import CMakeFiles/Lab__de_Computadores.dir/main.c.o  -o Lab__de_Computadores.exe -Wl,--out-implib,libLab__de_Computadores.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
