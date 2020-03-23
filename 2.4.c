@@ -25,7 +25,12 @@ char* esp1(char*s)
 	}
 	str[i]='\0';
 	esp(str);
-	final = malloc(sizeof(strlen(str)));
+	final = (char*) malloc(strlen(str) *sizeof(char));
+	if(final == NULL) 
+	{
+		printf("malloc unsucessfull.\n");
+		exit(1);
+	}
 	for(j=0; j<strlen(str); j++)
 	{
 		final[j]=str[j];
@@ -39,5 +44,6 @@ int main(int argc, char const *argv[])
 	char* final;
 	final = esp1(str);
 	printf("%s", final);
+	free(final);
 	return 0;
 }

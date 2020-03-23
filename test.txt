@@ -1,0 +1,2 @@
+Descrição:
+Implemente, em C o comando my_cat que leia o conteúdo de ficheiros de forma sequencial,

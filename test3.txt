@@ -1,0 +1,3 @@
+Os ficheiros deverão ser processados pela ordem
+que aparecem na linha de comandos. Se o ficheiro for apenas um - (ou não for indicado nenhum
+nome), o programa my_cat deverá ler da entrada padrão.
