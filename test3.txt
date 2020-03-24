@@ -1,3 +1,4 @@
-Os ficheiros deverão ser processados pela ordem
-que aparecem na linha de comandos. Se o ficheiro for apenas um - (ou não for indicado nenhum
-nome), o programa my_cat deverá ler da entrada padrão.
+Descrição:
+Implemente, em C o comando my_cat que leia o conteúdo de ficheiros de forma sequencial,
+
+escrevendo esses conteúdos na saída padrão. 

@@ -18,6 +18,7 @@ void print (char const *argv[], int i)
 	{
 		printf("%s", text);
 	}
+	printf("\n");
 
 	free(text);
 	fclose(fp);
