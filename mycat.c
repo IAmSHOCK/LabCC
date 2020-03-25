@@ -1,35 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <wchar.h>
 // feito ate ./my_cat file1 - file2 - file3
 
 void print (char const *argv[], int i)
 {
-	char* text;
-	text = (char*) malloc(50*sizeof(char));
+	char ch;
 
 	FILE* fp = fopen(argv[i], "r");
 	if(fp==NULL)
 	{
 		printf("%s: No such file or directory \n", argv[i]);
-		exit(0);
+		exit(1);
 	}
 
-	while(fgets(text, 50, fp)!=NULL)
+	while((ch = fgetc(fp))!=EOF)
 	{
-		printf("%s", text);
+		printf("%c", ch);
 	}
 	printf("\n");
 
-	free(text);
 	fclose(fp);
 }
 
 void print_stdin()
 {
 	char ch;
+	int i=0;
 	while((ch = fgetc(stdin)) != EOF)
 	{
+		if(i==0) printf("\n");
 		printf("%c", ch);
+		i++;
 	}
 }
 
@@ -43,14 +45,13 @@ int file_exists(char const *argv[], int i)
 
 int main(int argc, char const *argv[])
 {
-	int i=2;
-	print(argv, 1);
+	int i=1;
 	if(argc == 1)	
 	{
 		print_stdin();
 	}
 
-	while(i!=argc)
+	while(i<argc)
 	{
 		if(argv[i][0] == '-')
 		{
