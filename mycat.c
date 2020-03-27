@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
-// feito ate ./my_cat file1 - file2 - file3
+// ponto 1 feito
 
 void print (char const *argv[], int i)
 {
@@ -18,7 +18,6 @@ void print (char const *argv[], int i)
 	{
 		printf("%c", ch);
 	}
-	printf("\n");
 
 	fclose(fp);
 }
@@ -66,5 +65,5 @@ int main(int argc, char const *argv[])
 		i++;
 	}
 
-	return 0;
+	exit(0);
 }
