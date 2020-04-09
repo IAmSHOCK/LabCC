@@ -4,11 +4,14 @@
 #include <getopt.h>
 
 #define MAXSIZE 200
-//feito ate -n
+//feito
 
-int print (char *const *argv, int i, int nFlag, int sum)
+int print (char *const *argv, int i, int nFlag, int bFlag, int sFlag, int sum)
 {
 	char ch;
+	char *str;
+	char *ant;
+
 
 	FILE* fp = fopen(argv[i], "r");
 	if(fp==NULL)
@@ -17,26 +20,119 @@ int print (char *const *argv, int i, int nFlag, int sum)
 		exit(1);
 	}
 
-	if(nFlag == 1)
+	int n = 0;
+	n += nFlag*100;
+	n += bFlag*10;
+	n += sFlag;
+
+	switch(n)
 	{
-		char *str;
-		str = (char *) malloc(MAXSIZE);
+		case 100:
+			str = (char *) malloc(MAXSIZE);
 
-		while(fgets(str, MAXSIZE, fp) != NULL)
-		{
-			printf("%6d\t""%s", sum, str);
-			sum++;
-		}
-		sum--;
+			while(fgets(str, MAXSIZE, fp) != NULL)
+			{
+				printf("%6d\t""%s", sum, str);
+				sum++;
+			}
+			sum--;
 
-		free(str);
-	}
-	else
-	{ 
-		while((ch = fgetc(fp))!=EOF)
-		{
-			printf("%c", ch);
-		}
+			free(str);
+			break;
+
+		case 10:
+			str = (char *) malloc(MAXSIZE);
+
+			while(fgets(str, MAXSIZE, fp) != NULL)
+			{
+				if (*str == '\n')
+				{
+					printf("%s", str);
+				}
+				else
+				{
+					printf("%6d\t""%s", sum, str);
+					sum++;
+				}
+			}
+			sum--;
+
+			free(str);
+			break;
+
+		case 1:
+			str = (char *) malloc(MAXSIZE);
+			ant = (char *) malloc(MAXSIZE);
+
+			while(fgets(str, MAXSIZE, fp) != NULL)
+			{
+				if (*str == '\n' && *ant == '\n')
+				{
+					
+				}
+				else
+				{
+					printf("%s", str);
+				}
+				*ant = *str;
+			}
+
+			free(str);
+			break;	
+
+		case 11:
+			str  = (char *) malloc(MAXSIZE);
+			ant  = (char *) malloc(MAXSIZE);
+			*ant = '\n';
+			while(fgets(str, MAXSIZE, fp) != NULL)
+			{
+				if (*str == '\n' && *ant != '\n')
+				{
+					printf("\n");
+				}
+				else
+				{
+					if((*str != '\n' && *ant == '\n') || (*str != '\n' && *ant != '\n'))
+					{
+						printf("%6d\t""%s", sum, str);
+						sum++;
+					}
+				}
+				*ant = *str;
+			}
+			sum--;
+			
+			free(str);
+			break;
+
+		case 0:
+			while((ch = fgetc(fp))!=EOF)
+			{
+				printf("%c", ch);
+			}
+			break;
+
+		case 101:
+			str = (char *) malloc(MAXSIZE);
+			ant = (char *) malloc(MAXSIZE);
+
+			while(fgets(str, MAXSIZE, fp) != NULL)
+			{
+				if (*str == '\n' && *ant == '\n')
+				{
+					
+				}
+				else
+				{
+					printf("%6d\t""%s", sum, str);
+					sum++;
+				}
+				*ant = *str;
+			}
+			sum--;
+			
+			free(str);			
+			break;			
 	}
 
 	fclose(fp);
@@ -64,9 +160,9 @@ int file_exists(char *const *argv, int i)
 
 int main(int argc, char *const *argv)
 {
-	int nFlag 	= 0;
-	int bFlag 	= 0;
-	int sFlag 	= 0;
+	int nFlag = 0;
+	int bFlag = 0;
+	int sFlag = 0;
 
 	int i = 1;
 	if(argc == 1)	
@@ -102,7 +198,7 @@ int main(int argc, char *const *argv)
 
 		if(file_exists(argv,i))
 		{
-			current_sum += print(argv, i, nFlag, current_sum);
+			current_sum += print(argv, i, nFlag, bFlag, sFlag, current_sum);
 		}
 		
 		i++;
