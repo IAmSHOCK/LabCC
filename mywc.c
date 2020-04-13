@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//feito print stdin
 void count_stdin()
 {
 	int chars = 0;
