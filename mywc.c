@@ -1,5 +1,12 @@
 #include <stdio.h>
-//feito print stdin
+#include <stdlib.h>
+#include <ctype.h>
+//feito count stdin
+
+int lines_total = 0;
+int words_total = 0;
+int chars_total = 0;
+
 void count_stdin()
 {
 	int chars = 0;
@@ -7,30 +14,73 @@ void count_stdin()
 	int words = 0;
 
 	char ch;
-	char ant = ' ';
 
 	while((ch = fgetc(stdin)) != EOF)
 	{
-		if(ant == ' ') words++;
-		if(ch == '\n') lines++;
-		else if(ch != ' ' && ch != '\t') chars++;
+		if(isalpha(ch))
+		{
+			words++;
+		} 
+		chars++;
+		if(ch  == '\n') lines++;
+	}
+	for(; ch != EOF; ch = fgetc(stdin))	
+	{
+		chars++;
+		if(ch  == '\n') lines++;
 
-		ant = ch;
-	}	
+		if(!isalpha(ch)) break;
+	}
+
+	lines_total += lines;
+	words_total += words;
+	chars_total += chars;
 	printf("%d %d %d \n", lines, words, chars );
 }
 
-void count()
+void count(char *const *argv, int i)
 {
+	FILE *fp = fopen(argv[i], "r");
+	if(fp == NULL) printf("./my_wc: %s: No such file or directory\n", argv[i]);
 
+	int chars = 0;
+	int lines = 0;
+	int words = 0;
+
+	char ch;
+
+	while((ch = fgetc(stdin)) != EOF)
+	{
+		if(isalpha(ch))
+		{
+			words++;
+		} 
+
+		chars++;
+		if(ch  == '\n') lines++;
+	}
+	
+	for(; ch != EOF; ch = fgetc(fp))	
+	{
+		chars++;
+		if(ch  == '\n') lines++;
+
+		if(!isalpha(ch)) break;
+	}
+	
+	lines_total += lines;
+	words_total += words;
+	chars_total += chars;
+	
+	printf("%d %d %d %s \n", lines, words, chars, argv[i] );
 }
 
 int file_exists(char *const *argv, int i)
 {
 	FILE *fp = fopen(argv[i], "r");
-	if(fp == NULL) return 0;
+	if(fp == NULL) exit(0);
 	fclose(fp);
-	return 1;
+	exit(1);
 } 
 
 int main(int argc, char *const *argv)
@@ -51,11 +101,12 @@ int main(int argc, char *const *argv)
 
 		if(file_exists(argv, i))
 		{
-			count();
+			count(argv, i);
 		}
 		else printf("./my_wc: %s: No such file or directory\n", argv[i]);
 	}
 
+	if (argc > 2) printf("%d %d %d total", lines_total, words_total, chars_total);
 
-	return 0;
+	exit(0);
 }

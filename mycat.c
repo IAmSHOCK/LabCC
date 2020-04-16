@@ -189,7 +189,7 @@ int main(int argc, char *const *argv)
 	}
 
 	i = optind;
-	while(i<argc)
+	while(i < argc)
 	{
 		if(argv[i][0] == '-')
 		{
