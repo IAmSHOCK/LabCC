@@ -14,22 +14,18 @@ void count_stdin()
 	int words = 0;
 
 	char ch;
+	char prev = '\n';
 
 	while((ch = fgetc(stdin)) != EOF)
 	{
-		if(isalpha(ch))
-		{
-			words++;
-		} 
+		
 		chars++;
-		if(ch  == '\n') lines++;
-	}
-	for(; ch != EOF; ch = fgetc(stdin))	
-	{
-		chars++;
+
 		if(ch  == '\n') lines++;
 
-		if(!isalpha(ch)) break;
+		if(!isspace(prev) && (isspace(ch)) ) words++;
+
+		prev = ch;
 	}
 
 	lines_total += lines;
@@ -48,39 +44,32 @@ void count(char *const *argv, int i)
 	int words = 0;
 
 	char ch;
+	char prev = '\n';
 
-	while((ch = fgetc(stdin)) != EOF)
+	while((ch = fgetc(fp)) != EOF)
 	{
-		if(isalpha(ch))
-		{
-			words++;
-		} 
+		
+		chars++;
 
-		chars++;
-		if(ch  == '\n') lines++;
-	}
-	
-	for(; ch != EOF; ch = fgetc(fp))	
-	{
-		chars++;
 		if(ch  == '\n') lines++;
 
-		if(!isalpha(ch)) break;
+		if(!isspace(prev) && (isspace(ch)) ) words++;
+
+		prev = ch;
 	}
-	
+
 	lines_total += lines;
 	words_total += words;
 	chars_total += chars;
-	
 	printf("%d %d %d %s \n", lines, words, chars, argv[i] );
 }
 
 int file_exists(char *const *argv, int i)
 {
 	FILE *fp = fopen(argv[i], "r");
-	if(fp == NULL) exit(0);
+	if(fp == NULL) return 0;
 	fclose(fp);
-	exit(1);
+	return 1;
 } 
 
 int main(int argc, char *const *argv)
@@ -104,6 +93,7 @@ int main(int argc, char *const *argv)
 			count(argv, i);
 		}
 		else printf("./my_wc: %s: No such file or directory\n", argv[i]);
+		i++;
 	}
 
 	if (argc > 2) printf("%d %d %d total", lines_total, words_total, chars_total);
