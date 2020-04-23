@@ -117,105 +117,41 @@ void search(char word[], char* const *argv, int i, int flag)
 					if(isupper(line[k])) line[k] = tolower(line[k]);
 					k++;
 				}
+
 				while(j < strlen(word))
 				{
-					if(isupper(word[j])) word[j] = tolower(word[j]);
+					if(isupper(word[j]) word[j]) = tolower(word[j]);
 					j++;
 				}
 				k = 0;
 				j = 0;
-
 				while(line[k] != '\0')//verificar para a linha toda
 				{
-					if(isupper(word[j]))
+					
+					if(line[k] == word[j]) //encontrar primeiro char da word
 					{
-
-						if(toupper(line[k]) == word[j]) //encontrar primeiro char da word
+						j++;
+						l = k+1;
+						while(word[j] != '\0') //encontrar os restantes chars
 						{
-							j++;
-							l = k+1;
-							while(word[j] != '\0') //encontrar os restantes chars
+							if(line[l] == word[j]) found_flag = 1;
+							else 
 							{
-								if(isupper(word[j]))
-								{
-									if(toupper(line[l]) == word[j]) found_flag = 1;
-									else 
-									{
-										found_flag = 0;
-										break;
-									}
-									j++;
-									l++;
-								}
-								else
-								{
-									if(islower(word[j]))
-									{
-										if(tolower(line[l]) == word[j]) found_flag = 1;
-										else 
-										{
-											found_flag = 0;
-											break;
-										}
-										j++;
-										l++;
-									}
-								}
-								if(found_flag)
-								{
-									fwrite(line, nread, 1, stdout);
-									//exit_flag = 0;
-									break;
-								}
+								found_flag = 0;
+								break;
 							}
-							j = 0;
-							k++;
+							j++;
+							l++;
+						}
+						if(found_flag)
+						{
+							fwrite(line, nread, 1, stdout);
+							//exit_flag = 0;
+							break;
 						}
 					}
-					else
-					{
-						if(tolower(line[k]) == word[j]) //encontrar primeiro char da word
-						{
-							j++;
-							l = k+1;
-							while(word[j] != '\0') //encontrar os restantes chars
-							{
-								if(isupper(word[j]))
-								{
-									if(toupper(line[l]) == word[j]) found_flag = 1;
-									else 
-									{
-										found_flag = 0;
-										break;
-									}
-									j++;
-									l++;
-								}
-								else
-								{
-									if(islower(word[j]))
-									{
-										if(tolower(line[l]) == word[j]) found_flag = 1;
-										else 
-										{
-											found_flag = 0;
-											break;
-										}
-										j++;
-										l++;
-									}
-								}
-								if(found_flag)
-								{
-									fwrite(line, nread, 1, stdout);
-									//exit_flag = 0;
-									break;
-								}
-							}
-							j = 0;
-							k++;
-						}
-					} 	
+					j = 0;
+					k++;
 				}
 			}
 			break;
