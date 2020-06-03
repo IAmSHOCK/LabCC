@@ -62,11 +62,11 @@ void count(char *const *argv, int i, int flag)
 		chars++;
 		tmp_line++;
 		if(ch  == '\n') 
-			{
-				lines++;
-				if(tmp_line > bigger_line )bigger_line = tmp_line;
-				tmp_line = 0;
-			}
+		{
+			lines++;
+			if(tmp_line > bigger_line )bigger_line = tmp_line;
+			tmp_line = 0;
+		}
 
 		if(!isspace(prev) && (isspace(ch)) ) words++;
 
